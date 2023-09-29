@@ -22,6 +22,9 @@ Route::controller(StudentController::class)->group(function () {
     Route::get('filter-students','filterStudents');
     Route::post('students', 'store');
     Route::get('students/create', 'create');
+    Route::get('students/{id}', 'show');
+    Route::get('students/{id}/edit', 'edit');
+    Route::put('students/{id}', 'update');
 
 });
 Route::controller(CourseController::class)->group(function () {

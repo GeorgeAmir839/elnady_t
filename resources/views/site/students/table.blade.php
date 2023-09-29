@@ -13,34 +13,34 @@
             <tr class="align-items-center" data-item-id="{{ $item['id'] }}">
                 <th scope="row">{{ $key + 1 }}</th>
                 {{-- contenteditable="true" --}}
-                <td  class="editable" data-item-id="{{ $item['id'] }}" >
+                <td class="editable" data-item-id="{{ $item['id'] }}">
                     {{ $item['full_name'] }}
 
                 </td>
-                <td class="editable" data-item-id="{{ $item['id'] }}" >
+                <td class="editable" data-item-id="{{ $item['id'] }}">
                     {{ $item->level->name }}
 
                 </td>
-                <td  class="editable" data-item-id="{{ $item['id'] }}" >
+                <td class="editable" data-item-id="{{ $item['id'] }}">
                     {{ $item['code'] }}
 
                 </td>
                 <td class=" row ">
-                    <div class="col-6">
-                        <button class="btn btn-secondary cancel-edit {{ 'cancel-edit' . $item['id'] }} d-none"
-                            data-id="{{ $item['id'] }}">X</button>
-                        <button class="btn btn-primary save-item {{ 'save-item' . $item['id'] }} d-none"
-                            data-id="{{ $item['id'] }}">Edit</button>
+                    <div class="col">
 
-                    </div>
-                    <div class="col-6">
-                        {{-- <a class="btn btn-success  btn-sm"
-                            href="{{ route('items.show', ['item' => $item['id']]) }}">
+                        <a class="btn btn-success create_lg_modal btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#create_lg_modal" href="{{ route('students.show', $item['id']) }}">
                             show
-                        </a> --}}
+                        </a>
+                        <a class="btn btn-primary create_lg_modal btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#create_lg_modal" href="{{ route('students.edit', $item['id']) }}">
+                            Edit
+                        </a>
+                        <a class="btn btn-danger create_lg_modal btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#create_lg_modal" href="{{ route('confirmDelete', $item['id']) }}">
+                            delete
+                        </a>
 
-                        <button class="btn btn-danger btn-sm delete-item"
-                            data-id="{{ $item['id'] }}">Delete</button>
                     </div>
                 </td>
             </tr>

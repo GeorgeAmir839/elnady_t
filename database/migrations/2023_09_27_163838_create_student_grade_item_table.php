@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('student_grade_item', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students'); 
+            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete(); ; 
             $table->foreignId('grade_item_id')->constrained('grade_items'); 
             $table->decimal('grade', 8, 2); 
             $table->timestamps();

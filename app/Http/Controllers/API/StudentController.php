@@ -53,4 +53,37 @@ class StudentController extends Controller
         $student->load(['courses', 'gradeItems', 'level']);
         return $this->apiResponse($student, 'Student saved successfully', 200);
     }
+
+
+    public function show($id)
+    {
+
+        $student = Student::find($id);
+        return $this->apiResponse($student, 'Student details', 200);
+    }
+    public function edit($id)
+    {
+
+        $data['student'] = Student::find($id);
+        $data['levels'] =  Level::all();
+        $data['courses'] =  Course::all();
+        $data['courses_ids']  = $data['student']->courses->pluck('id')->toArray();
+        return $this->apiResponse($data, 'Student details', 200);
+    }
+    public function update(Request $request, $id)
+    {
+        $student = Student::find($id);
+        $student->update($request->except('courses'));
+        if ($request->has('courses')) {
+            $student->courses()->sync($request->courses);
+        }
+        return $this->apiResponse(null, 'data saved successfully', 200);
+    }
+    public function destroy($id)
+    {
+
+        $student = Student::find($id);
+        $student->delete();
+        return $this->apiResponse(null, 'delete successfully', 200);
+    }
 }

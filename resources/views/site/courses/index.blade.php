@@ -8,31 +8,17 @@
     </style>
 @endsection
 @section('content')
-    <div class="text-left">
-        <div class="row align-items-center p-0 m-0">
-            <div class="col-auto">
-                <h1 class="h3">{{ trans('All Courses') }}</h1>
-            </div>
+    
 
-
-            <div class="col text-right">
-                <a type="button" href="{{ route('courses.create') }}" class="btn btn-primary create_lg_modal btn-sm"
-                    data-bs-toggle="modal" data-bs-target="#create_lg_modal">
-                    Add Student
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
+    <div class="card ">
         <div class="card-header px-5 py-3">
 
            
 
             <form action="{{ route('courses.index') }}" method="GET">
 
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="search" id="search" @isset($sort_search) value="{{ $sort_search }}" @endisset placeholder="Type name or code or email & Enter">
+                <div class="input-group mb-3 mt-5">
+                    <input type="text" class="form-control" name="search" id="search" @isset($sort_search) value="{{ $sort_search }}" @endisset placeholder="Type name or code  & Enter">
                 </div>
             </form>
 

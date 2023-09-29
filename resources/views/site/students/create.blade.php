@@ -67,7 +67,7 @@
             processData: false,
             success: function(response) {
                 $('#create_lg_modal').modal('hide');
-                toastr.success(response.success);
+                window.location.reload();
             },
             error: function(response) {
                 $('#nameError').text(response.responseJSON.errors.full_name);

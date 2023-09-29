@@ -19,6 +19,7 @@ Route::get('/', function () {
     return redirect('students');
 });
 Route::resource('students', StudentController::class);
+Route::get('/confirm-delete/{id}', 'StudentController@confirmDelete')->name('confirmDelete');
 Route::get('/filter-students', 'StudentController@filterStudents')->name('filter.students');
 Route::resource('courses', 'CourseController');
 Route::get('/manage-students/{id}', 'CourseController@manageStudents')->name('manage.students');
