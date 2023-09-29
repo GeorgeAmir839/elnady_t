@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('students');
 });
+Route::resource('students', StudentController::class);
+Route::get('/filter-students', 'StudentController@filterStudents')->name('filter.students');
+Route::resource('courses', 'CourseController');
+Route::get('/manage-students/{id}', 'CourseController@manageStudents')->name('manage.students');
+
+
