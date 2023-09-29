@@ -1,4 +1,4 @@
-<form id="storeForm">
+<form method="post" action="{{ route('store.manage.students',$course->id) }}">
     @csrf
 
 

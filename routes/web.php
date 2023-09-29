@@ -22,5 +22,6 @@ Route::resource('students', StudentController::class);
 Route::get('/filter-students', 'StudentController@filterStudents')->name('filter.students');
 Route::resource('courses', 'CourseController');
 Route::get('/manage-students/{id}', 'CourseController@manageStudents')->name('manage.students');
+Route::post('/store-manage-students/{id}', 'CourseController@storeManageStudents')->name('store.manage.students');
 
 

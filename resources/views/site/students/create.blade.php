@@ -2,31 +2,25 @@
     @csrf
 
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Full Name</label>
-        <input type="text" name="full_name" class="form-control" id="exampleFormControlInput1" placeholder="example">
-        @error('name')
-            <span class="text-danger">{{ trans($message) }}</span>
-        @enderror
+        <label  class="form-label">Full Name</label>
+        <input   type="text" name="full_name" class="form-control"  placeholder="example">
+            <span id="nameError" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Email address</label>
-        <input type="email" name="email" class="form-control" id="exampleFormControlInput1"
+        <label  class="form-label">Email address</label>
+        <input   type="email" name="email" class="form-control" 
             placeholder="name@example.com">
-        @error('email')
-            <span class="text-danger">{{ trans($message) }}</span>
-        @enderror
+            <span id="emailError" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Full Name</label>
-        <input type="date" name="date_of_birth" class="form-control" id="exampleFormControlInput1"
-            placeholder="example">
-        @error('date_of_birth')
-            <span class="text-danger">{{ trans($message) }}</span>
-        @enderror
+        <label  class="form-label">Birth date</label>
+        <input    type="date" name="date_of_birth" class="form-control" min="2015-01-01" 
+            placeholder="12/7/2021">
+            <span id="birthError" class="text-danger"></span>
     </div>
     <div class="mb-3">
 
-        <label for="exampleFormControlInput1" class="form-label">Level</label>
+        <label  class="form-label">Level</label>
 
         <select class="form-select sort" id="inputGroupSelect04" name="level_id"
             aria-label="Example select with button addon">
@@ -40,7 +34,7 @@
     </div>
     <div class="mb-3">
 
-        <label for="exampleFormControlInput1" class="form-label">Course</label>
+        <label  class="form-label">Course</label>
 
         <select class="form-select sort" multiple id="inputGroupSelect04" name="courses[]"
             aria-label="Example select with button addon">
@@ -76,18 +70,9 @@
                 toastr.success(response.success);
             },
             error: function(response) {
-                // $('#nameError').text(response.responseJSON.errors.name);
-                var html = '<ul>';
-                if (response.responseJSON.errors) {
-                    $.each(response.responseJSON.errors, function(key, val) {
-                        html += "<li>" + val + "</li>";
-                    });
-                } else {
-                    html += "<li>" + response.responseJSON.message + "</li>";
-                }
-
-                html += "</ul>";
-                $('.error_from_ajax').removeClass('d-none').html(html);
+                $('#nameError').text(response.responseJSON.errors.full_name);
+                $('#emailError').text(response.responseJSON.errors.email);
+                $('#birthError').text(response.responseJSON.errors.date_of_birth);
             },
         });
     });

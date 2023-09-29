@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CourseController extends Controller
 {
     public function index(Request $request)
     {
-        $sort_search = null;
+        $data = array();
+        $data['sort_search'] = null;
         $courses = Course::orderBy('id', 'desc');
        
         if ($request->has('search')) {
@@ -19,18 +21,17 @@ class CourseController extends Controller
           
         }
 
-        $courses = $courses->paginate(10);
-        return view('site.courses.index', compact('courses','sort_search'));
+        $data['courses'] = $courses->get();
+        return $this->apiResponse($data, 'Courses data get successfully', 200);
     }
     public function manageStudents($id)
     {
-        $students =  Student::all();
-        $course = Course::find($id);
-        $students_ids  = $course->students->pluck('id')->toArray();
-        return response([
-            'title' => 'Mange Student',
-            'view' => view('site.courses.manage_students', compact('students','course','students_ids'))->render(),
-        ]);
+        $data = array();
+        $data['students'] =  Student::all();
+        $data['course'] = Course::find($id);
+        $data['students_ids']  = $data['course']->students->pluck('id')->toArray();
+        return $this->apiResponse($data, 'successfully', 200);
+        
     }
     
     public function storeManageStudents(Request $request,$id)
@@ -40,13 +41,11 @@ class CourseController extends Controller
             $course->students()->sync($request->students);
         }
         
-        return redirect()->back();
+        return $this->apiResponse(null, 'data saved successfully', 200);
     }
     public function show($id)
     {
-        
         $course = Course::find($id);
-        // dd( $item->students);
-        return view('site.courses.show',compact('course'));
+        return $this->apiResponse($course, 'Course details', 200);
     }
 }

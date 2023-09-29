@@ -1,50 +1,47 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Models\Level;
 use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStusentRequest;
 
 class StudentController extends Controller
 {
+
     public function index(Request $request)
     {
-        $sort_search = null;
+        $data = array();
+        $data['sort_search'] = null;
         $students = Student::orderBy('id', 'desc');
-       
+
         if ($request->has('search')) {
             $sort_search = $request->search;
             $students = Student::where('full_name', 'like', '%' . $sort_search . '%')->orWhere('email', 'like', '%' . $sort_search . '%')->orWhere('code', 'like', '%' . $sort_search . '%');
-          
         }
 
-        $levels =  Level::all();
-        $students = $students->paginate(10);
-        return view('site.students.index', compact('students', 'levels','sort_search'));
+        $data['levels'] =  Level::all();
+        $data['students'] = $students->get();
+
+        return $this->apiResponse($data, 'Stusents data get successfully', 200);
     }
     public function filterStudents(Request $request)
-{
-    $levelId = $request->input('level_id');
-
-    // Query students based on the selected level
-    $students = Student::where('level_id', $levelId)->get();
-    return view('site.students.table', compact('students'));
-}
+    {
+        $levelId = $request->input('level_id');
+        $data['students'] = Student::where('level_id', $levelId)->get();
+        return $this->apiResponse($data, 'filter successfully', 200);
+    }
     public function create()
     {
-        $levels =  Level::all();
-        $courses =  Course::all();
-        return response([
-            'title' => 'Create Student',
-            'view' => view('site.students.create', compact('levels', 'courses'))->render(),
-        ]);
+        $data['levels'] =  Level::all();
+        $data['courses'] =  Course::all();
+        return $this->apiResponse($data, 'Student creation page data', 200);
     }
     public function store(StoreStusentRequest $request)
     {
-        dd($request->all());
         $request->merge([
             'code' => uniqid(),
         ]);
@@ -52,9 +49,8 @@ class StudentController extends Controller
         if ($request->has('courses')) {
             $student->courses()->attach($request->courses);
         }
-        
-        return response()->json([
-            'success' => 'Successfully',
-        ]);
+
+        $student->load(['courses', 'gradeItems', 'level']);
+        return $this->apiResponse($student, 'Student saved successfully', 200);
     }
 }

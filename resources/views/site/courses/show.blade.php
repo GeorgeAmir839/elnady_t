@@ -6,7 +6,7 @@
 
             <h1 class="text-center">course details</h1>
             <div class="text-left">
-                <div class="row align-items-center p-0 m-0">
+                <div class="row align-itemsp-center p-0 m-0">
                   
         
                     <div class="col text-right">

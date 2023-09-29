@@ -14,6 +14,7 @@ class StudentFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    
     public function definition(): array
     {
         $levelIds = \App\Models\Level::pluck('id')->toArray();
